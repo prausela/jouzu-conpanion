@@ -1,0 +1,96 @@
+.hard-edges {
+    border-radius: 0 !important;
+}
+
+.hard-tl-edge {
+    border-top-left-radius: 0 !important;
+}
+
+.hard-tr-edge {
+    border-top-right-radius: 0 !important;
+}
+
+.hard-bl-edge {
+    border-bottom-left-radius: 0 !important;
+}
+
+.hard-br-edge {
+    border-bottom-right-radius: 0 !important;
+}
+
+.cut-left-corner {
+    clip-path: polygon(0px 0px, 100% 0px, 100% 80%, 80% 100%, 0px 100%);
+}
+
+.text-2 {
+    font-size: 2rem !important;
+}
+
+.text-3 {
+    font-size: 2.2rem !important;
+}
+
+.text-4 {
+    font-size: 2.4rem !important;
+}
+
+.text-10 {
+    font-size: 10rem !important;
+}
+
+.absolute-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+.absolute-center-x {
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%,0);
+    transform: translate(-50%,0);
+}
+
+.interface {
+    margin: 0 auto;
+    max-width: 50rem;
+    min-width: 25rem;
+}
+
+.form-control:focus {
+    border-color: #6c757d !important;
+    box-shadow: 0 0 0 .25rem rgba(108,117,125,.25) !important;
+}
+
+.fix-top {
+    position: fixed !important;
+    top: 0;
+    z-index: 1030;
+}
+
+.fix-bottom {
+    position: fixed !important;
+    bottom: 0;
+    z-index: 1030;
+}
+
+body {
+    padding: 0 !important;
+    overflow: auto !important;
+}
+
+.modal {
+    padding-top: 50vh;
+    
+}
+
+.modal-content {
+    -webkit-transform: translate(0, -75%);
+    transform: translate(0, -75%);
+}
+
+.modal-footer .no-flex-basis {
+    flex-basis: 0 !important;
+}
