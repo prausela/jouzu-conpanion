@@ -6,14 +6,14 @@ import { Alert, Button, Form, InputGroup, Modal } from "react-bootstrap";
 const AddQuestionModal = ({title, addItem, confirmButton, icon, show, setShow}) => {
     const [name, setName] = useState("");
     const [correctAnswer, setCorrectAnswer] = useState("");
-    const [otherAnswers, setOtherAnswers] = useState([{name:""},{name:""},{name:""}]);
+    const [otherAnswers, setOtherAnswers] = useState([{name:""},{name:""}]);
     const [alert, setAlert] = useState("");
 
     const handleClose = () => {
         setShow(false);
         setName("");
         setCorrectAnswer("");
-        setOtherAnswers([{name:""},{name:""},{name:""}]);
+        setOtherAnswers([{name:""},{name:""}]);
     };
 
     const handleAccept = () => {

@@ -40,11 +40,11 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
 
     const addItem  = async (question, setAlert) => {
         if (!question.name || !question.answers || !question.correctAnswer){
-            setAlert("Necesitás especificar nombre, respuesta correcta y, al menos, 3 otras opciones.");
+            setAlert("Necesitás especificar nombre, respuesta correcta y, al menos, 2 otras opciones.");
             return false;
         }
-        if(question.answers.length < 3) {
-            setAlert("Necesitás especificar al menos 3 otras opciones.");
+        if(question.answers.length < 2) {
+            setAlert("Necesitás especificar al menos 2 otras opciones.");
             return false;
         }
         setMenuAlert({variant: "primary", value:"Espere..."});
@@ -74,7 +74,11 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
 
     const editItem = async (id, question, setAlert) => {
         if (!question.name || !question.answers || !question.correctAnswer){
-            setAlert("Necesitás especificar nombre, respuesta correcta y, al menos, 3 otras opciones.");
+            setAlert("Necesitás especificar nombre, respuesta correcta y, al menos, 2 otras opciones.");
+            return false;
+        }
+        if(question.answers.length < 2) {
+            setAlert("Necesitás especificar al menos 2 otras opciones.");
             return false;
         }
         setMenuAlert({variant: "primary", value:"Espere..."});
