@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
 import { useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 
@@ -9,7 +10,6 @@ const EditModal = ({title, confirmButton, icon, show, setShow, name, item, editI
 
     const handleClose = () => {
         setShow(false);
-        setAlert("");
     };
 
     const handleAccept = () => {
@@ -23,6 +23,15 @@ const EditModal = ({title, confirmButton, icon, show, setShow, name, item, editI
             handleAccept();
         }
     }
+
+    useEffect(() => {
+        if (show) {
+            setNewName(name);
+        } else {
+            setNewName("");
+        }
+        setAlert("");
+    }, [show])
 
     return (
         <>

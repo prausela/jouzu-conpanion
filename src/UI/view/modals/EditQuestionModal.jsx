@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
 import { useState } from "react";
 import { Alert, Button, Form, InputGroup, Modal } from "react-bootstrap";
 
@@ -40,6 +41,20 @@ const EditQuestionModal = ({title, editItem, confirmButton, icon, show, name, it
             setOtherAnswers([...otherAnswers, {name:""}])
         }
     }
+
+    useEffect(() => {
+        if (show) {
+            setNewName(name);
+            setCorrectAnswer(item.correct_answer.name);
+            setOtherAnswers([...item.answers, {name: ""}]);
+            setAlert("");
+        } else {
+            setNewName("");
+            setCorrectAnswer("");
+            setOtherAnswers([]);
+            setAlert("");
+        }
+    }, [show]);
 
     return (
         <>
