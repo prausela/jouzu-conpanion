@@ -56,7 +56,6 @@
 .interface {
     margin: 0 auto;
     max-width: 50rem;
-    min-width: 25rem;
 }
 
 .form-control:focus {
