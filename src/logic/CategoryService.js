@@ -12,8 +12,8 @@ const createCategory = async (name) => {
     return await CategoryDao.createCategory(name);
 }
 
-const changeCategoryName = async (id, newName) => {
-    return await CategoryDao.changeCategoryName(id, newName);
+const changeCategory = async (id, newName, visibility) => {
+    return await CategoryDao.changeCategory(id, newName, visibility);
 }
 
 const removeCategory = async (id) => {
@@ -24,6 +24,6 @@ export default {
     getAllCategories,
     findCategory,
     createCategory,
-    changeCategoryName,
+    changeCategory,
     removeCategory
 }

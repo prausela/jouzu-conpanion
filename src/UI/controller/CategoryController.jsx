@@ -52,7 +52,7 @@ const CategoryController = ({showLogin, setShowLogin, authActionsPending, setAut
 
     const editItem = async (id, name, setAlert) => {
         setMenuAlert({variant: "primary", value:"Espere..."});
-        return CategoryService.changeCategoryName(id, name).then((response) => {
+        return CategoryService.changeCategory(id, name, "visible").then((response) => {
             if (response.status === OK) {
                 let newItems = [...items];
                 let modifiedItem = newItems.find(item => item.id === id);

@@ -12,8 +12,8 @@ const createSet = async (categoryId, name) => {
     return await SetDao.createSet(categoryId, name);
 }
 
-const changeSetName = async (categoryId, id, newName) => {
-    return await SetDao.changeSetName(categoryId, id, newName);
+const changeSet = async (categoryId, id, newName, visibility) => {
+    return await SetDao.changeSet(categoryId, id, newName, visibility);
 }
 
 const removeSet = async (categoryId, id) => {
@@ -24,6 +24,6 @@ export default {
     getAllSets,
     findSet,
     createSet,
-    changeSetName,
+    changeSet,
     removeSet
 }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import CategoryService from "../../logic/CategoryService";
 import QuestionService from "../../logic/QuestionService";
 import SetService from "../../logic/SetService";
 import { CREATED, NO_CONTENT, OK, UNAUTHORIZED } from "../config/apiConstants";

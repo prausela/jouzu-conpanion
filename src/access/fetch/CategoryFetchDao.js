@@ -68,15 +68,16 @@ const createCategory = async (name) => {
     }
 }
 
-const changeCategoryName = async (id, newName) => {
+const changeCategory = async (id, newName, visibility) => {
     try {
         let authToken = fetchConfig.getAuthorizationHeader();
         if(!authToken) {
             return { status: UNAUTHORIZED }
         }
         const updatedCategory = {
-            id      : id,
-            name    : newName
+            id         : id,
+            name       : newName,
+            visibility : visibility
         };
         const response = await fetch(BASE_URL + `/categories/${id}/put`, {
             method : "post",
@@ -126,6 +127,6 @@ export default {
     getAllCategories,
     findCategory,
     createCategory,
-    changeCategoryName,
+    changeCategory,
     removeCategory
 };

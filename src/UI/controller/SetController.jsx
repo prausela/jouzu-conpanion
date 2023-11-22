@@ -65,7 +65,7 @@ const SetController = ({showLogin, setShowLogin, authActionsPending, setAuthActi
 
     const editItem = async (id, name, setAlert) => {
         setMenuAlert({variant: "primary", value:"Espere..."});
-        return SetService.changeSetName(categoryId, id, name).then((response) => {
+        return SetService.changeSet(categoryId, id, name, "visible").then((response) => {
             if (response.status === OK) {
                 let newItems = [...items];
                 let modifiedItem = newItems.find(item => item.id === id);

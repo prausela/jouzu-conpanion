@@ -67,15 +67,16 @@ const createSet = async (categoryId, name) => {
     }
 }
 
-const changeSetName = async (categoryId, id, newName) => {
+const changeSet = async (categoryId, id, newName, visibility) => {
     try {
         let authToken = fetchConfig.getAuthorizationHeader();
         if(!authToken) {
             return { status: UNAUTHORIZED }
         }
         const updatedSet = {
-            id      : id,
-            name    : newName
+            id         : id,
+            name       : newName,
+            visibility : visibility
         };
         const response = await fetch(BASE_URL + `/categories/${categoryId}/sets/${id}/put`, {
             method : "post",
@@ -125,6 +126,6 @@ export default {
     getAllSets,
     findSet,
     createSet,
-    changeSetName,
+    changeSet,
     removeSet
 };
