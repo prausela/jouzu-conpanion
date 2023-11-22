@@ -14,6 +14,7 @@ const Items = ({items, editItem, deleteItem, className, style, itemUrl, addQuest
                     deleteItem={deleteItem}
                     itemUrl={itemUrl}
                     addQuestion={addQuestion}
+                    visibility={item.visibility}
                 />
             ) : "" }
         </div>

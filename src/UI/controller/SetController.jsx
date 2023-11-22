@@ -63,15 +63,15 @@ const SetController = ({showLogin, setShowLogin, authActionsPending, setAuthActi
         });
     }
 
-    const editItem = async (id, name, setAlert) => {
+    const editItem = async (id, name, visibility, setAlert) => {
         setMenuAlert({variant: "primary", value:"Espere..."});
-        return SetService.changeSet(categoryId, id, name, "visible").then((response) => {
+        return SetService.changeSet(categoryId, id, name, visibility).then((response) => {
             if (response.status === OK) {
                 let newItems = [...items];
                 let modifiedItem = newItems.find(item => item.id === id);
                 modifiedItem.name = name;
                 setItems(newItems);
-                setAlert("");
+                setAlert ? setAlert("") : "";
                 setMenuAlert({variant: "success", value:"Sets cargados exitosamente"});
                 setTimeout(() => {
                     setMenuAlert({});
@@ -82,12 +82,12 @@ const SetController = ({showLogin, setShowLogin, authActionsPending, setAuthActi
                 setAuthActionsPending(newAuthActionsPending);
                 setLogInAlert("Necesitás ingresar nuevamente para completar la acción");
                 setShowLogin(true);
-                setAlert("");
+                setAlert ? setAlert("") : "";
                 setMenuAlert({});
                 return true;
             }
             setMenuAlert({});
-            setAlert("Ocurrió un error al intentar editar el set. Intente nuevamente");
+            setAlert ? setAlert("Ocurrió un error al intentar editar el set. Intente nuevamente") : "";
             return false;
         });
     }

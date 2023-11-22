@@ -7,8 +7,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditQuestionModal from './modals/EditQuestionModal';
 
-const EditableItem = ({id, item, className, editItem, deleteItem, itemUrl, addQuestion}) => {
-    const [visible, setVisible] = useState(true);
+const EditableItem = ({id, item, className, editItem, deleteItem, itemUrl, addQuestion, visibility}) => {
+    const [visible, setVisible] = useState(visibility === "visible" ? true : false);
 
     const [isShowingEditModal, setShowingEditModal] = useState(false);
     const [isShowingDeleteModal, setShowingDeleteModal] = useState(false);
@@ -16,7 +16,11 @@ const EditableItem = ({id, item, className, editItem, deleteItem, itemUrl, addQu
     const showEditModal = () => setShowingEditModal(true);
     const showDeleteModal = () => setShowingDeleteModal(true);
 
-    const switchVisibility = () => setVisible(!visible);
+    const switchVisibility = () => {
+        editItem(id, item.name, visible === true ? "invisible" : "visible", undefined).then((res) => {
+            setVisible(res ? !visible : visible);
+        })
+    }
 
     const navigate = useNavigate();
 
@@ -37,7 +41,6 @@ const EditableItem = ({id, item, className, editItem, deleteItem, itemUrl, addQu
                             variant={visible ? "outline-dark" : "outline-secondary"}
                             className="hard-tl-edge hard-bl-edge hard-br-edge p-2 flex-grow-1 d-flex flex-column align-items-center"
                             onClick={switchVisibility}
-                            disabled
                         >
                             {
                                 visible ? (
@@ -76,7 +79,7 @@ const EditableItem = ({id, item, className, editItem, deleteItem, itemUrl, addQu
                 icon={faPencil}
                 name={item.name}
                 item={item}
-                editItem={(name, setAlert) => editItem(id, name, setAlert)}
+                editItem={(name, setAlert) => editItem(id, name, visibility, setAlert)}
             />
             ) : (
                 <EditModal
@@ -87,7 +90,7 @@ const EditableItem = ({id, item, className, editItem, deleteItem, itemUrl, addQu
                     icon={faPencil}
                     name={item.name}
                     item={item}
-                    editItem={(name, setAlert) => editItem(id, name, setAlert)}
+                    editItem={(name, setAlert) => editItem(id, name, visibility, setAlert)}
                 />
             )}
             

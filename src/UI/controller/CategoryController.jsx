@@ -50,15 +50,15 @@ const CategoryController = ({showLogin, setShowLogin, authActionsPending, setAut
         });
     }
 
-    const editItem = async (id, name, setAlert) => {
+    const editItem = async (id, name, visibility, setAlert) => {
         setMenuAlert({variant: "primary", value:"Espere..."});
-        return CategoryService.changeCategory(id, name, "visible").then((response) => {
+        return CategoryService.changeCategory(id, name, visibility).then((response) => {
             if (response.status === OK) {
                 let newItems = [...items];
                 let modifiedItem = newItems.find(item => item.id === id);
                 modifiedItem.name = name;
                 setItems(newItems);
-                setAlert("");
+                setAlert ? setAlert("") : "";
                 setMenuAlert({variant: "success", value:"Niveles cargados exitosamente"});
                 setTimeout(() => {
                     setMenuAlert({});
@@ -69,12 +69,12 @@ const CategoryController = ({showLogin, setShowLogin, authActionsPending, setAut
                 setAuthActionsPending(newAuthActionsPending);
                 setLogInAlert("Necesitás ingresar nuevamente para completar la acción");
                 setShowLogin(true);
-                setAlert("");
+                setAlert ? setAlert("") : "";
                 setMenuAlert({});
                 return true;
             }
             setMenuAlert({});
-            setAlert("Ocurrió un error al intentar editar el nivel. Intente nuevamente");
+            setAlert ? setAlert("Ocurrió un error al intentar editar el nivel. Intente nuevamente") : "";
             return false;
         });
     }
