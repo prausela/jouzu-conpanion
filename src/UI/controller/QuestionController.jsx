@@ -71,7 +71,14 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
         });
     }
 
-    const editItem = async (id, question, setAlert) => {
+    const editItem = async (id, question, visibility, setAlert) => {
+        if (!setAlert) {
+            setMenuAlert({variant: "primary", value:"Funcionalidad no disponible"});
+            setTimeout(() => {
+                setMenuAlert({});
+            }, 3000);
+            return false;
+        }
         if (!question.name || !question.answers || !question.correctAnswer){
             setAlert("Necesitás especificar nombre, respuesta correcta y, al menos, 2 otras opciones.");
             return false;
