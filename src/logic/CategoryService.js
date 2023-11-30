@@ -12,8 +12,8 @@ const createCategory = async (name) => {
     return await CategoryDao.createCategory(name);
 }
 
-const changeCategory = async (id, newName, visibility) => {
-    return await CategoryDao.changeCategory(id, newName, visibility);
+const changeCategory = async (id, newName, position, visibility) => {
+    return await CategoryDao.changeCategory(id, newName, position, visibility);
 }
 
 const removeCategory = async (id) => {
