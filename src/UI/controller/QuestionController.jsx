@@ -6,7 +6,7 @@ import { CREATED, NO_CONTENT, OK, UNAUTHORIZED } from "../config/apiConstants";
 import ItemInterface from "../view/ItemInterface";
 
 const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAuthActionsPending, logInAlert, setLogInAlert}) => {
-    const [items, setItems] = useState([]);
+    const [items, setItems] = useState(null);
     const [questionSet, setQuestionSet] = useState({});
     const [menuAlert, setMenuAlert] = useState({});
 
@@ -19,6 +19,7 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
     }, []);
 
     const refreshItems = () => {
+        setItems(null);
         setMenuAlert({variant: "primary", value:"Espere..."});
         SetService.findSet(categoryId, setId).then((response) => {
             if (response.status !== OK) {
