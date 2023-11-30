@@ -71,7 +71,7 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
         });
     }
 
-    const editItem = async (id, question, visibility, setAlert) => {
+    const editItem = async (id, question, position, visibility, setAlert) => {
         if (!setAlert) {
             setMenuAlert({variant: "primary", value:"Funcionalidad no disponible"});
             setTimeout(() => {

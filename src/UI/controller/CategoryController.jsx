@@ -50,9 +50,9 @@ const CategoryController = ({showLogin, setShowLogin, authActionsPending, setAut
         });
     }
 
-    const editItem = async (id, name, visibility, setAlert) => {
+    const editItem = async (id, name, position, visibility, setAlert) => {
         setMenuAlert({variant: "primary", value:"Espere..."});
-        return CategoryService.changeCategory(id, name, visibility).then((response) => {
+        return CategoryService.changeCategory(id, name, position, visibility).then((response) => {
             if (response.status === OK) {
                 let newItems = [...items];
                 let modifiedItem = newItems.find(item => item.id === id);
@@ -65,7 +65,7 @@ const CategoryController = ({showLogin, setShowLogin, authActionsPending, setAut
                 }, 3000);
                 return true;
             } else if (response.status === UNAUTHORIZED) {
-                const newAuthActionsPending = [...authActionsPending, () => editItem(id, name, setAlert)];
+                const newAuthActionsPending = [...authActionsPending, () => editItem(id, name, position, visibility, setAlert)];
                 setAuthActionsPending(newAuthActionsPending);
                 setLogInAlert("Necesitás ingresar nuevamente para completar la acción");
                 setShowLogin(true);
