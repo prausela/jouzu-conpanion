@@ -45,7 +45,7 @@ const EditableItem = ({id, item, itemCount, className, editItem, deleteItem, ref
                             <>
                                 <div className="d-flex flex-column" style={{width:"5rem"}}>
                                     <Button 
-                                        variant={visible ? (parseInt(item.position) !== 0 ? "outline-dark" : "dark") : (parseInt(item.position) !== 0 ? "outline-secondary" : "secondary")}
+                                        variant={visible ? "dark" : "secondary"}
                                         className="hard-tr-edge hard-bl-edge hard-br-edge p-2 flex-grow-1 d-flex flex-column align-items-center justify-content-center"
                                         onClick={moveUp}
                                         disabled={parseInt(item.position) === 0}
@@ -54,7 +54,7 @@ const EditableItem = ({id, item, itemCount, className, editItem, deleteItem, ref
                                     </Button>
                                     <span className="pt-2"/>
                                     <Button 
-                                        variant={visible ? (parseInt(item.position) !== itemCount-1 ? "outline-dark" : "dark") : (parseInt(item.position) !== itemCount-1 ? "outline-secondary" : "secondary")}
+                                        variant={visible ? "dark" : "secondary"}
                                         className="hard-tl-edge hard-tr-edge hard-br-edge p-2 flex-grow-1 d-flex flex-column align-items-center justify-content-center"
                                         onClick={moveDown}
                                         disabled={parseInt(item.position) === itemCount-1}
