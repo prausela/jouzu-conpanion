@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBrush } from '@fortawesome/free-solid-svg-icons';
 
 const Items = ({items, editItem, deleteItem, refreshItems, className, style, itemUrl, addQuestion}) => {
-    console.log(items)
-    console.log(items ? "true" : "false")
     return (
         <div className={className} style={style}>
             { items ? (items.length > 0 ? items.map((item, index) =>
