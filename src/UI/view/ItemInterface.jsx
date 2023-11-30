@@ -1,4 +1,4 @@
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCopy, faPlus, faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import { useRef, useState } from 'react';
 import { faLockOpen } from "@fortawesome/free-solid-svg-icons";
 import ContextMenu from './ContextMenu';
@@ -6,6 +6,7 @@ import useHeight from './hooks/useHeight';
 import Items from './Items';
 import AddButton from './AddButton';
 import LogInModal from './modals/LogInModal';
+import ImportButton from './ImportButton';
 
 const ItemInterface = ({items, title, addItem, editItem, deleteItem, refreshItems, showLogin, setShowLogin, logInAlert, setLogInAlert, authActionsPending, setAuthActionsPending, itemUrl, addQuestion, menuAlert}) => {
 
@@ -49,13 +50,23 @@ const ItemInterface = ({items, title, addItem, editItem, deleteItem, refreshItem
                     setAuthActionsPending={setAuthActionsPending}
                 />
             </main>
-            <div className="fix-bottom w-100 interface absolute-center-x pt-5 bg-white p-2">
+            <div className="fix-bottom w-100 interface absolute-center-x pt-5 bg-white p-2 d-flex">
                 <AddButton
                     title="Agregar"
                     icon={faPlus}
                     refer={nonEditableItemRef}
                     addItem={addItem}
                     addQuestion={addQuestion}
+                    className="flex-grow-1"
+                />
+                <span className="ps-2"/>
+                <ImportButton
+                    title="Importar"
+                    icon={faRightToBracket}
+                    refer={nonEditableItemRef}
+                    addItem={addItem}
+                    addQuestion={addQuestion}
+                    className=""
                 />
             </div>
         </>

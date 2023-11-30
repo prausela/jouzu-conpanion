@@ -28,7 +28,7 @@ const Items = ({items, editItem, deleteItem, refreshItems, className, style, ite
                     </span>
                     
                     <span className="p-3 d-block" />
-                    Hace click en <strong>Agregar</strong> para empezar a crear contenido
+                    Hace click en <strong>Agregar</strong> o <strong>Importar</strong> <br /> para empezar a crear contenido
                 </div>
             )) : "" }
         </div>
