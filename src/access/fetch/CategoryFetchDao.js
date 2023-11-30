@@ -4,7 +4,7 @@ import fetchConfig from "../../UI/config/fetchConfig";
 
 const getAllCategories = async () => {
     try {
-        const response = await fetch(BASE_URL + `/categories/get`, {
+        const response = await fetch(BASE_URL + `/categories/get?sort=position`, {
             method : "get"
         });
         if (response.status !== OK) {
