@@ -15,6 +15,10 @@ const SetController = ({showLogin, setShowLogin, authActionsPending, setAuthActi
     const setUrl = (id) => `/levels/${categoryId}/sets/${id}`;
 
     useEffect(() => {
+        refreshItems();
+    }, []);
+
+    const refreshItems = () => {
         setMenuAlert({variant: "primary", value:"Espere..."});
         CategoryService.findCategory(categoryId).then((response) => {
             if (response.status !== OK) {
@@ -35,7 +39,7 @@ const SetController = ({showLogin, setShowLogin, authActionsPending, setAuthActi
                 setMenuAlert({});
             }, 3000);
         })
-    }, []);
+    }
 
     const addItem  = async (name, setAlert) => {
         setMenuAlert({variant: "primary", value:"Espere..."});
@@ -96,7 +100,8 @@ const SetController = ({showLogin, setShowLogin, authActionsPending, setAuthActi
         setMenuAlert({variant: "primary", value:"Espere..."});
         return SetService.removeSet(categoryId, id).then((response) => {
             if (response.status === NO_CONTENT) {
-                setItems(items.filter(item => item.id !== id));
+                //setItems(items.filter(item => item.id !== id));
+                refreshItems();
                 setAlert("");
                 setMenuAlert({variant: "success", value:"Sets cargados exitosamente"});
                 setTimeout(() => {
@@ -125,6 +130,7 @@ const SetController = ({showLogin, setShowLogin, authActionsPending, setAuthActi
             addItem={addItem}
             editItem={editItem}
             deleteItem={deleteItem}
+            refreshItems={refreshItems}
             setShowLogin={setShowLogin}
             showLogin={showLogin}
             logInAlert={logInAlert}

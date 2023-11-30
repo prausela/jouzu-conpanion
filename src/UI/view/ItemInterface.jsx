@@ -7,7 +7,7 @@ import Items from './Items';
 import AddButton from './AddButton';
 import LogInModal from './modals/LogInModal';
 
-const ItemInterface = ({items, title, addItem, editItem, deleteItem, showLogin, setShowLogin, logInAlert, setLogInAlert, authActionsPending, setAuthActionsPending, itemUrl, addQuestion, menuAlert}) => {
+const ItemInterface = ({items, title, addItem, editItem, deleteItem, refreshItems, showLogin, setShowLogin, logInAlert, setLogInAlert, authActionsPending, setAuthActionsPending, itemUrl, addQuestion, menuAlert}) => {
 
     const contextMenuRef            = useRef(null);
     const nonEditableItemRef        = useRef(null);
@@ -28,6 +28,7 @@ const ItemInterface = ({items, title, addItem, editItem, deleteItem, showLogin, 
                     items={items}
                     editItem={editItem}
                     deleteItem={deleteItem}
+                    refreshItems={refreshItems}
                     style={{
                         paddingTop:     contextMenuHeight + "px",
                         paddingBottom:  nonEditableItemHeight + "px"

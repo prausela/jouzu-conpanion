@@ -15,6 +15,10 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
     const setUrl = (id) => `/levels/${categoryId}/sets/${setId}/questions/${id}`;
 
     useEffect(() => {
+        refreshItems();
+    }, []);
+
+    const refreshItems = () => {
         setMenuAlert({variant: "primary", value:"Espere..."});
         SetService.findSet(categoryId, setId).then((response) => {
             if (response.status !== OK) {
@@ -35,7 +39,7 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
                 setMenuAlert({});
             }, 3000);
         })
-    }, []);
+    }
 
     const addItem  = async (question, setAlert) => {
         if (!question.name || !question.answers || !question.correctAnswer){
@@ -122,7 +126,8 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
         setMenuAlert({variant: "primary", value:"Espere..."});
         return QuestionService.removeQuestion(categoryId, setId, id).then((response) => {
             if (response.status === NO_CONTENT) {
-                setItems(items.filter(item => item.id !== id));
+                //setItems(items.filter(item => item.id !== id));
+                refreshItems();
                 setAlert("");
                 setMenuAlert({variant: "success", value:"Preguntas cargadas exitosamente"});
                 setTimeout(() => {
@@ -151,6 +156,7 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
             addItem={addItem}
             editItem={editItem}
             deleteItem={deleteItem}
+            refreshItems={refreshItems}
             setShowLogin={setShowLogin}
             showLogin={showLogin}
             logInAlert={logInAlert}

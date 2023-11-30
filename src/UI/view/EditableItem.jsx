@@ -1,13 +1,13 @@
 import { Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEyeSlash, faPencil, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faPencil, faTrashCan, faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import EditModal from './modals/EditModal';
 import DeleteModal from './modals/DeleteModal';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditQuestionModal from './modals/EditQuestionModal';
 
-const EditableItem = ({id, item, className, editItem, deleteItem, itemUrl, addQuestion, visibility}) => {
+const EditableItem = ({id, item, itemCount, className, editItem, deleteItem, refreshItems, itemUrl, addQuestion, visibility}) => {
     const [visible, setVisible] = useState(visibility === "visible" ? true : false);
 
     const [isShowingEditModal, setShowingEditModal] = useState(false);
@@ -17,8 +17,20 @@ const EditableItem = ({id, item, className, editItem, deleteItem, itemUrl, addQu
     const showDeleteModal = () => setShowingDeleteModal(true);
 
     const switchVisibility = () => {
-        editItem(id, item.name, visible === true ? "invisible" : "visible", undefined).then((res) => {
+        editItem(id, item.name, item.position, visible === true ? "invisible" : "visible", undefined).then((res) => {
             setVisible(res ? !visible : visible);
+        })
+    }
+
+    const moveUp = () => {
+        editItem(id, item.name, (parseInt(item.position) - 1).toString(), visible === true ? "visible" :  "invisible", undefined).then((res) => {
+            refreshItems();
+        })
+    }
+
+    const moveDown = () => {
+        editItem(id, item.name, (parseInt(item.position) + 1).toString(), visible === true ? "visible" :  "invisible", undefined).then((res) => {
+            refreshItems();
         })
     }
 
@@ -28,6 +40,32 @@ const EditableItem = ({id, item, className, editItem, deleteItem, itemUrl, addQu
         <>
             <div className={"d-flex flex-column p-2 px-4" + (className ? " " + className : "")}>
                 <div className="d-flex">
+                    {
+                        item.position ? (
+                            <>
+                                <div className="d-flex flex-column" style={{width:"5rem"}}>
+                                    <Button 
+                                        variant={visible ? (parseInt(item.position) !== 0 ? "outline-dark" : "dark") : (parseInt(item.position) !== 0 ? "outline-secondary" : "secondary")}
+                                        className="hard-tr-edge hard-bl-edge hard-br-edge p-2 flex-grow-1 d-flex flex-column align-items-center justify-content-center"
+                                        onClick={moveUp}
+                                        disabled={parseInt(item.position) === 0}
+                                    >
+                                        <FontAwesomeIcon icon={faChevronUp} style={{fontSize:"1.5rem"}}/><span className="pt-2"><small>Subir</small></span>
+                                    </Button>
+                                    <span className="pt-2"/>
+                                    <Button 
+                                        variant={visible ? (parseInt(item.position) !== itemCount-1 ? "outline-dark" : "dark") : (parseInt(item.position) !== itemCount-1 ? "outline-secondary" : "secondary")}
+                                        className="hard-tl-edge hard-tr-edge hard-br-edge p-2 flex-grow-1 d-flex flex-column align-items-center justify-content-center"
+                                        onClick={moveDown}
+                                        disabled={parseInt(item.position) === itemCount-1}
+                                    >
+                                        <span className="pb-2"><small>Bajar</small></span><FontAwesomeIcon icon={faChevronDown} style={{fontSize:"1.5rem"}}/>
+                                    </Button>
+                                </div>
+                                <span className="ps-2"/>
+                            </>
+                        ) : ""
+                    }
                     <Button 
                         variant={visible ? "dark" : "secondary"} 
                         className="p-2 flex-grow-1 text-2"

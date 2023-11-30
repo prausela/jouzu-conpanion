@@ -10,19 +10,23 @@ const CategoryController = ({showLogin, setShowLogin, authActionsPending, setAut
     const categoryUrl = (id) => `/levels/${id}`;
 
     useEffect(() => {
+        refreshItems();
+    }, []);
+
+    const refreshItems = () => {
         setMenuAlert({variant: "primary", value:"Espere..."});
         CategoryService.getAllCategories().then((response) => {
             if (response.status !== OK) {
                 setMenuAlert({variant: "danger", value:"Ocurrió un error. Refrezque la página"});
                 return;
             }
-            if (response.data) setItems(response.data);
+            if (response.data) setItems([...response.data]);
             setMenuAlert({variant: "success", value:"Niveles cargados exitosamente"});
             setTimeout(() => {
                 setMenuAlert({});
             }, 3000);
         })
-    }, []);
+    }
 
     const addItem  = async (name, setAlert) => {
         setMenuAlert({variant: "primary", value:"Espere..."});
@@ -83,7 +87,8 @@ const CategoryController = ({showLogin, setShowLogin, authActionsPending, setAut
         setMenuAlert({variant: "primary", value:"Espere..."});
         return CategoryService.removeCategory(id).then((response) => {
             if (response.status === NO_CONTENT) {
-                setItems(items.filter(item => item.id !== id));
+                //setItems(items.filter(item => item.id !== id));
+                refreshItems();
                 setAlert("");
                 setMenuAlert({variant: "success", value:"Niveles cargados exitosamente"});
                 setTimeout(() => {
@@ -112,6 +117,7 @@ const CategoryController = ({showLogin, setShowLogin, authActionsPending, setAut
             addItem={addItem}
             editItem={editItem}
             deleteItem={deleteItem}
+            refreshItems={refreshItems}
             setShowLogin={setShowLogin}
             showLogin={showLogin}
             logInAlert={logInAlert}
