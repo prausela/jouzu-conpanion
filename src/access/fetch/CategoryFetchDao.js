@@ -68,7 +68,7 @@ const createCategory = async (name) => {
     }
 }
 
-const changeCategory = async (id, newName, visibility) => {
+const changeCategory = async (id, newName, position, visibility) => {
     try {
         let authToken = fetchConfig.getAuthorizationHeader();
         if(!authToken) {
@@ -77,6 +77,7 @@ const changeCategory = async (id, newName, visibility) => {
         const updatedCategory = {
             id         : id,
             name       : newName,
+            position   : position,
             visibility : visibility
         };
         const response = await fetch(BASE_URL + `/categories/${id}/put`, {

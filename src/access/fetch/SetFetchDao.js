@@ -67,7 +67,7 @@ const createSet = async (categoryId, name) => {
     }
 }
 
-const changeSet = async (categoryId, id, newName, visibility) => {
+const changeSet = async (categoryId, id, newName, position, visibility) => {
     try {
         let authToken = fetchConfig.getAuthorizationHeader();
         if(!authToken) {
@@ -76,6 +76,7 @@ const changeSet = async (categoryId, id, newName, visibility) => {
         const updatedSet = {
             id         : id,
             name       : newName,
+            position   : position,
             visibility : visibility
         };
         const response = await fetch(BASE_URL + `/categories/${categoryId}/sets/${id}/put`, {
