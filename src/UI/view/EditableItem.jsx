@@ -79,7 +79,7 @@ const EditableItem = ({id, item, className, editItem, deleteItem, itemUrl, addQu
                 icon={faPencil}
                 name={item.name}
                 item={item}
-                editItem={(name, setAlert) => editItem(id, name, visibility, setAlert)}
+                editItem={(name, setAlert) => editItem(id, name, item.position, visibility, setAlert)}
             />
             ) : (
                 <EditModal
@@ -90,7 +90,7 @@ const EditableItem = ({id, item, className, editItem, deleteItem, itemUrl, addQu
                     icon={faPencil}
                     name={item.name}
                     item={item}
-                    editItem={(name, setAlert) => editItem(id, name, visibility, setAlert)}
+                    editItem={(name, setAlert) => editItem(id, name, item.position, visibility, setAlert)}
                 />
             )}
             
