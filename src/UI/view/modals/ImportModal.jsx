@@ -1,4 +1,4 @@
-import { faCheck, faHandPointer, faInfo, faPlus, faRightLeft, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faCircleInfo, faHandPointer, faInfo, faPlus, faRightLeft, faRightToBracket, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
@@ -6,6 +6,8 @@ import IconButton from "../IconButton";
 import CategorySelectModal from "./CategorySelectModal";
 import SetSelectModal from "./SetSelectModal";
 import { OK } from "../../config/apiConstants";
+import QuestionInfoModal from "./QuestionInfoModal";
+import ImportingModal from "./ImportingModal";
 
 
 const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions}) => {
@@ -14,18 +16,31 @@ const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, catego
     const [isHoverSet, setHoverSet] = useState(false);
     const [showCategorySelect, setShowCategorySelect] = useState(false);
     const [showSetSelect, setShowSetSelect] = useState(false);
+    const [showQuestionInfo, setShowQuestionInfo] = useState(false);
+    const [showImportingModal, setShowImportingModal] = useState(false);
     const [selectedCat, setSelectedCat] = useState(null);
     const [selectedSet, setSelectedSet] = useState(null);
     const [questions, setQuestions] = useState([]);
     const [selectedQuestions, setSelectedQuestions ] = useState([]);
+    const [question, setQuestion] = useState(null);
 
     const handleClose = () => {
         setShow(false);
         setSelectedCat(null);
         setSelectedSet(null);
+        setSelectedQuestions([]);
     };
 
+    const loadQuestionInfo = (id) => {
+        console.log(questions.filter(q => (q.id).toString() === id.toString())[0]);
+        setQuestion(questions.filter(q => (q.id).toString() === id.toString())[0]);
+        setShowQuestionInfo(true);
+    }
+
     const handleAccept = () => {
+        if (selectedQuestions.length >= 1){
+            setShowImportingModal(true);
+        }
     }
 
     const onClickCat = () => {
@@ -65,6 +80,15 @@ const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, catego
             setSelectedSet(null);
         }
         setSelectedCat(value);
+    }
+
+    const setShowImporting = (importing) => {
+        if (!importing) {
+            handleClose();
+            setShowImportingModal(false);
+        } else {
+            setShowImportingModal(true);
+        }
     }
 
     const idIsSelected = (id) => {
@@ -107,7 +131,7 @@ const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, catego
 
     return (
         <>
-            <Modal show={(show && !showCategorySelect && !showSetSelect)} onHide={handleClose} className="modal-content-center">
+            <Modal show={(show && !showCategorySelect && !showSetSelect && !showQuestionInfo && !showImportingModal)} onHide={handleClose} className="modal-content-center">
                 <Modal.Header closeButton className="text-white bg-dark">
                     <Modal.Title className="d-flex align-items-center"><FontAwesomeIcon icon={icon} className="text-2"/><span className="ps-2"><small>{title}</small></span></Modal.Title>
                 </Modal.Header>
@@ -238,6 +262,7 @@ const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, catego
                                                 <Button
                                                     className="ms-3"
                                                     variant="dark"
+                                                    onClick={() => loadQuestionInfo(q.id)}
                                                     size="lg"
                                                 >
                                                     <FontAwesomeIcon icon={faInfo} className="px-1" />
@@ -261,6 +286,7 @@ const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, catego
                                                     className="ms-3"
                                                     variant="dark"
                                                     size="lg"
+                                                    onClick={() => loadQuestionInfo(q.id)}
                                                 >
                                                     <FontAwesomeIcon icon={faInfo} className="px-1" />
                                                 </Button>
@@ -276,8 +302,8 @@ const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, catego
                     <Button variant="secondary" onClick={handleClose} className="flex-fill no-flex-basis p-3">
                         Cancelar
                     </Button>
-                    <Button variant="dark" onClick={handleAccept} className={"flex-fill no-flex-basis p-3" + (!(selectedSet && selectedCat) ? " invisible" : "")}
-                        disabled={!(selectedSet && selectedCat)}
+                    <Button variant="dark" onClick={handleAccept} className={"flex-fill no-flex-basis p-3" + (!(selectedSet && selectedCat) || (selectedQuestions.length < 1) ? " invisible" : "")}
+                        disabled={!(selectedSet && selectedCat) || (selectedQuestions.length < 1)}
                     >
                         {confirmButton}
                     </Button>
@@ -303,6 +329,20 @@ const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, catego
                 setSelectedSet={setSelectedSet}
                 sets={sets}
                 setSets={setSets}
+            />
+            <QuestionInfoModal
+                title="Seleccionar Set"
+                show={showQuestionInfo}
+                question={question}
+                setShow={setShowQuestionInfo}
+                icon={faCircleInfo}
+            />
+            <ImportingModal
+                title="Importando"
+                show={showImportingModal}
+                selectedQuestions={selectedQuestions}
+                setShow={setShowImporting}
+                icon={faRightToBracket}
             />
         </>
     )
