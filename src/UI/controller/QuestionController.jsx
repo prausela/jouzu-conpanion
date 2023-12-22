@@ -4,6 +4,7 @@ import QuestionService from "../../logic/QuestionService";
 import SetService from "../../logic/SetService";
 import { CREATED, NO_CONTENT, OK, UNAUTHORIZED } from "../config/apiConstants";
 import ItemInterface from "../view/ItemInterface";
+import CategoryService from "../../logic/CategoryService";
 
 const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAuthActionsPending, logInAlert, setLogInAlert}) => {
     const [items, setItems] = useState(null);
@@ -40,6 +41,10 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
                 setMenuAlert({});
             }, 3000);
         })
+    }
+
+    const getQuestionsByCatSet = async (categoryId, setId) => {
+        return QuestionService.getAllQuestions(categoryId, setId);
     }
 
     const addItem  = async (question, setAlert) => {
@@ -150,6 +155,41 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
         })
     }
 
+    const [categories, setCategories] = useState(null);
+    const [sets, setSets] = useState(null);
+
+    const loadCategories = async (setAlert) => {
+        setCategories(null);
+        //setAlert("Cargando niveles...");
+        CategoryService.getAllCategories().then((response) => {
+            if (response.status !== OK) {
+                setAlert("Ocurrió un error. Refrezque la página");
+                return;
+            }
+            if (response.data) setCategories([...response.data]);
+            /*setAlert("Niveles cargados exitosamente");
+            setTimeout(() => {
+                setAlert("");
+            }, 3000);*/
+        })
+    }
+
+    const loadSets = async (categoryId, setAlert) => {
+        setSets(null);
+        //setAlert("Cargando sets...");
+        SetService.getAllSets(categoryId).then((response) => {
+            if (response.status !== OK) {
+                setAlert("Ocurrió un error. Refrezque la página");
+                return;
+            }
+            if (response.data) setSets(response.data);
+            /*setAlert("Sets cargados exitosamente");
+            setTimeout(() => {
+                setAlert("");
+            }, 3000);*/
+        })
+    }
+
     return (
         <ItemInterface 
             items={items}
@@ -166,6 +206,13 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
             setAuthActionsPending={setAuthActionsPending}
             itemUrl={setUrl}
             menuAlert={menuAlert}
+            categories={categories}
+            sets={sets}
+            setCategories={loadCategories}
+            setSets={loadSets}
+            categoryId={categoryId}
+            setId={setId}
+            selectQuestions={getQuestionsByCatSet}
             addQuestion
         />
     )

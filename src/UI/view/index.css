@@ -90,6 +90,15 @@ body {
     transform: translate(0, -75%);
 }
 
+.modal-content-center {
+    padding-top: 0;
+}
+
+.modal-content-center .modal-content {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+}
+
 .modal-footer .no-flex-basis {
     flex-basis: 0 !important;
 }

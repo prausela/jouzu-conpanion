@@ -8,7 +8,7 @@ import AddButton from './AddButton';
 import LogInModal from './modals/LogInModal';
 import ImportButton from './ImportButton';
 
-const ItemInterface = ({items, title, addItem, editItem, deleteItem, refreshItems, showLogin, setShowLogin, logInAlert, setLogInAlert, authActionsPending, setAuthActionsPending, itemUrl, addQuestion, menuAlert}) => {
+const ItemInterface = ({items, title, addItem, editItem, deleteItem, refreshItems, showLogin, setShowLogin, logInAlert, setLogInAlert, authActionsPending, setAuthActionsPending, itemUrl, addQuestion, menuAlert, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions}) => {
 
     const contextMenuRef            = useRef(null);
     const nonEditableItemRef        = useRef(null);
@@ -60,14 +60,23 @@ const ItemInterface = ({items, title, addItem, editItem, deleteItem, refreshItem
                     className="flex-grow-1"
                 />
                 <span className="ps-2"/>
-                <ImportButton
-                    title="Importar"
-                    icon={faRightToBracket}
-                    refer={nonEditableItemRef}
-                    addItem={addItem}
-                    addQuestion={addQuestion}
-                    className=""
-                />
+                { setCategories && setSets ?
+                    <ImportButton
+                        title="Importar"
+                        icon={faRightToBracket}
+                        refer={nonEditableItemRef}
+                        addItem={addItem}
+                        addQuestion={addQuestion}
+                        categories={categories}
+                        sets={sets}
+                        setCategories={setCategories}
+                        setSets={setSets}
+                        className=""
+                        categoryId={categoryId}
+                        setId={setId}
+                        selectQuestions={selectQuestions}
+                    /> : ""
+                }
             </div>
         </>
     )
