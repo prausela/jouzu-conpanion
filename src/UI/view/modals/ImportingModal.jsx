@@ -31,7 +31,12 @@ const ImportingModal = ({title, icon, show, setShow, selectedQuestions, category
     };
 
     const importAllQuestions = async (setId, categoryId, allQuestions, idx) => {
-        return importAllQuestionsSync(setId, categoryId, allQuestions, idx)
+        return importAllQuestionsSync(setId, categoryId, allQuestions, idx);
+    }
+
+    const importSingleQuestion = async (setId, categoryId, question, idx) => {
+        const questionWrapper = [question];
+        return importAllQuestionsSync(setId, categoryId, questionWrapper, idx);
     }
 
     useEffect(() => {
@@ -76,7 +81,7 @@ const ImportingModal = ({title, icon, show, setShow, selectedQuestions, category
                             variant="primary"
                             onHoverVariant="white"
                             noHoverVariant="white"
-                            onClick={() => {q.id}}
+                            onClick={() => importSingleQuestion(setId, categoryId, q, 0)}
                             waiting={q.state === "waiting"}
                             success={q.state === "success"}
                             key={q.id}

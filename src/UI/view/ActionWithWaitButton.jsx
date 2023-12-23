@@ -20,7 +20,7 @@ const ActionWithWaitButton = ({className, icon, variant, text, noHoverVariant, o
             variant={waiting ? "outline-dark" : (success ? "outline-success" : "danger")}
             onMouseEnter={mouseEnter}
             onMouseLeave={mouseLeave}
-            onClick={onClick}
+            onClick={(waiting || success) ? (() => {}) : onClick}
             size="lg"
             disabled={waiting || (!waiting && success)}
             style={{
