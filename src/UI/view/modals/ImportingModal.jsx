@@ -5,21 +5,51 @@ import { Button, Modal } from "react-bootstrap";
 import ActionWithWaitButton from "../ActionWithWaitButton";
 
 
-const ImportingModal = ({title, icon, show, setShow, selectedQuestions}) => {
+const ImportingModal = ({title, icon, show, setShow, selectedQuestions, categoryId, setId, importQuestion, refreshItems}) => {
     const questionsWithState = selectedQuestions ? selectedQuestions.map(q => ({state: "waiting", ...q})) : [];
     const [questions, setQuestions] = useState(questionsWithState);
     const [areQuestionsWaiting, setAreQuestionsWaiting] = useState(true);
+    const [beginImport, setBeginImport] = useState(false);
 
     const handleClose = () => {
-        if (!areQuestionsWaiting){
-            setShow(false);
-        }
+        setShow(false);
+        setBeginImport(false);
     };
+
+    const importAllQuestionsSync = (setId, categoryId, allQuestions, idx) => {
+        return importQuestion(setId, categoryId, allQuestions).then(res => {
+            let questionsCopy = [...questions];
+            res.forEach(questionRes => {
+                const currQuestion = questionsCopy.filter(q => (q.id).toString() === (questionRes.id).toString())[0];
+                const filteredQuestions = questionsCopy.filter(q => (q.id).toString() !== (questionRes.id).toString());
+                questionsCopy = [({...currQuestion, state: questionRes.state}), ...filteredQuestions];
+            });
+            setQuestions(questionsCopy);
+            refreshItems();
+            return true;
+        });
+    };
+
+    const importAllQuestions = async (setId, categoryId, allQuestions, idx) => {
+        return importAllQuestionsSync(setId, categoryId, allQuestions, idx)
+    }
 
     useEffect(() => {
         const questionsWithState = selectedQuestions ? selectedQuestions.map(q => ({state: "waiting", ...q})) : [];
         setQuestions(questionsWithState);
-    }, [show]);
+    }, [selectedQuestions]);
+
+    useEffect(() => {
+        if (show && !beginImport && questions.length > 0){
+            setBeginImport(true);
+        }
+    }, [questions, show]);
+
+    useEffect(() => {
+        if (beginImport){
+            importAllQuestions(setId, categoryId, questions, 0);
+        }
+    }, [beginImport]);
 
     useEffect(() => {
         const waitingQuestions = questions.filter(q => q.state === "waiting");

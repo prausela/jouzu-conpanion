@@ -16,8 +16,6 @@ const QuestionInfoModal = ({title, question, icon, show, setShow}) => {
         }
     }
 
-    console.log();
-
     return (
         <>
             <Modal show={show} onHide={handleClose}>

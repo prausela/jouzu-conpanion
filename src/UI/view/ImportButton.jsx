@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import ImportModal from './modals/ImportModal';
 
-const ImportButton = ({title, addItem, className, variant, icon, refer, addQuestion, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions}) => {
+const ImportButton = ({title, addItem, className, variant, icon, refer, addQuestion, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions, importQuestion, refreshItems}) => {
     const [isShowingModal, setShowingModal] = useState(false);
 
     const showModal = () => setShowingModal(true);
@@ -40,6 +40,8 @@ const ImportButton = ({title, addItem, className, variant, icon, refer, addQuest
                     categoryId={categoryId}
                     setId={setId}
                     selectQuestions={selectQuestions}
+                    importQuestion={importQuestion}
+                    refreshItems={refreshItems}
                 />
                 
             }

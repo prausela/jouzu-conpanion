@@ -10,7 +10,7 @@ import QuestionInfoModal from "./QuestionInfoModal";
 import ImportingModal from "./ImportingModal";
 
 
-const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions}) => {
+const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions, importQuestion, refreshItems}) => {
     const [alert, setAlert] = useState("");
     const [isHoverCat, setHoverCat] = useState(false);
     const [isHoverSet, setHoverSet] = useState(false);
@@ -32,7 +32,6 @@ const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, catego
     };
 
     const loadQuestionInfo = (id) => {
-        console.log(questions.filter(q => (q.id).toString() === id.toString())[0]);
         setQuestion(questions.filter(q => (q.id).toString() === id.toString())[0]);
         setShowQuestionInfo(true);
     }
@@ -92,28 +91,18 @@ const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, catego
     }
 
     const idIsSelected = (id) => {
-        console.log("is");
-        console.log(id);
-        console.log(selectedQuestions);
         return selectedQuestions.filter(q => (q.id).toString() === id.toString()).length >= 1;
     }
 
     const onClickQuestion = (id) => {
-        console.log(id);
         const currQuestion = selectedQuestions.filter(q => (q.id).toString() === id.toString());
-        console.log(currQuestion)
         if (currQuestion.length >= 1) {
             const newSelectedQuestions = selectedQuestions.filter(q => (q.id).toString() !== id.toString());
-            console.log("chaju");
-            console.log(newSelectedQuestions);
             setSelectedQuestions(newSelectedQuestions);
         } else {
             const questionToAdd = questions.filter(q => (q.id).toString() === id.toString())[0];
-            console.log("hola")
-            console.log(questionToAdd);
             setSelectedQuestions([questionToAdd, ...selectedQuestions])
         }
-        console.log(selectedQuestions);
     }
 
     useEffect(() => {
@@ -122,9 +111,6 @@ const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, catego
         selectQuestions(selectedCat, selectedSet).then((response) => {
             if (response.status == OK){
                 setQuestions(response.data);
-                console.log(response);
-                console.log(setId);
-                console.log(categoryId);
             }
         });
     }, [selectedCat, selectedSet]);
@@ -343,6 +329,10 @@ const ImportModal = ({title, addItem, confirmButton, icon, show, setShow, catego
                 selectedQuestions={selectedQuestions}
                 setShow={setShowImporting}
                 icon={faRightToBracket}
+                categoryId={categoryId}
+                setId={setId}
+                importQuestion={importQuestion}
+                refreshItems={refreshItems}
             />
         </>
     )

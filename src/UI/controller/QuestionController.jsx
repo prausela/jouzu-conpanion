@@ -190,6 +190,16 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
         })
     }
 
+    const importQuestion = async (setId, categoryId, questions) => {
+        const importQuestions = questions.map(q => ({
+            "id" : q.id,
+            "name" : q.name,
+            "correctAnswer": q["correct_answer"],
+            "answers" : q.answers
+        }));
+        return QuestionService.importQuestions(categoryId, setId, importQuestions);
+    }
+
     return (
         <ItemInterface 
             items={items}
@@ -213,6 +223,7 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
             categoryId={categoryId}
             setId={setId}
             selectQuestions={getQuestionsByCatSet}
+            importQuestion={importQuestion}
             addQuestion
         />
     )
