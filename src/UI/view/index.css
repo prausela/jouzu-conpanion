@@ -102,3 +102,7 @@ body {
 .modal-footer .no-flex-basis {
     flex-basis: 0 !important;
 }
+
+.round-borders {
+    border-radius: 0.375rem;
+}

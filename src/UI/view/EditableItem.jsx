@@ -6,6 +6,7 @@ import DeleteModal from './modals/DeleteModal';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import EditQuestionModal from './modals/EditQuestionModal';
+import FolderButton from './FolderButton';
 
 const EditableItem = ({id, item, itemCount, className, editItem, deleteItem, refreshItems, itemUrl, addQuestion, visibility}) => {
     const [visible, setVisible] = useState(visibility === "visible" ? true : false);
@@ -66,13 +67,16 @@ const EditableItem = ({id, item, itemCount, className, editItem, deleteItem, ref
                             </>
                         ) : ""
                     }
-                    <Button 
-                        variant={visible ? "dark" : "secondary"} 
-                        className="p-2 flex-grow-1 text-2"
-                        onClick={() => addQuestion ? {} : navigate(itemUrl(id))}
+                    <div
+                        className="flex-grow-1 d-flex flex-column"
                     >
-                        <strong>{item.name}</strong>
-                    </Button>
+                        <FolderButton 
+                            text={item.name}
+                            visible={visible}
+                            onClick={() => addQuestion ? {} : navigate(itemUrl(id))}
+                            isFolder={false}
+                        />
+                    </div>
                     <span className="ps-2"/>
                     <div className="d-flex flex-column" style={{width:"5rem"}}>
                         <Button 
