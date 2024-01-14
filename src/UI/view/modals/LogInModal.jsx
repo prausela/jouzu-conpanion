@@ -38,7 +38,8 @@ const LogInModal = ({title, loginButton, icon, show, setShow, logInAlert, setLog
                 setPassword("");
             }
             else {
-                setLogInAlert("Usuario y contraseña incorrecto/s");
+                setLogInAlert("Usuario y/o contraseña incorrecto/s");
+                setPassword("");
             }
         });
         
