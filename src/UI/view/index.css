@@ -106,3 +106,7 @@ body {
 .round-borders {
     border-radius: 0.375rem;
 }
+
+.no-flex-basis {
+    flex-basis: 0 !important;
+}

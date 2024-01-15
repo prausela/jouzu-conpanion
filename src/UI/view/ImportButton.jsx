@@ -2,6 +2,7 @@ import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import ImportModal from './modals/ImportModal';
+import SelectImportModal from './modals/SelectImportModal';
 
 const ImportButton = ({title, addItem, className, variant, icon, refer, addQuestion, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions, importQuestion, refreshItems}) => {
     const [isShowingModal, setShowingModal] = useState(false);
@@ -26,9 +27,11 @@ const ImportButton = ({title, addItem, className, variant, icon, refer, addQuest
                 </div>
             </div>
             {
-                <ImportModal
-                    show={isShowingModal}
-                    setShow={setShowingModal}
+                <SelectImportModal
+                    selectImportTitle="Seleccionar cómo importar"
+                    selectImportIcon={icon}
+                    showSelect={isShowingModal}
+                    setShowSelect={setShowingModal}
                     title={title}
                     icon={icon}
                     confirmButton={title}
