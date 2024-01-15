@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import ImportModal from "./ImportModal";
+import CSVImportModal from "./CSVImportModal";
 
 const SelectImportModal = ({selectImportTitle, selectImportIcon, showSelect, setShowSelect, title, addItem, confirmButton, icon, show, setShow, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions, importQuestion, refreshItems}) => {
     const [showFromCSV, setShowFromCSV] = useState(false);
@@ -20,7 +21,19 @@ const SelectImportModal = ({selectImportTitle, selectImportIcon, showSelect, set
             setShowFromSet(false);
             setShowFromCSV(true);
         } else {
-            setShowSelect(true);
+            setShowSelect(false);
+            setShowFromSet(false);
+            setShowFromCSV(false);
+        }
+    }
+
+    const switchShowFromSetState = (newVal) => {
+        if (newVal) {
+            setShowSelect(false);
+            setShowFromSet(true);
+            setShowFromCSV(false);
+        } else {
+            setShowSelect(false);
             setShowFromSet(false);
             setShowFromCSV(false);
         }
@@ -39,7 +52,7 @@ const SelectImportModal = ({selectImportTitle, selectImportIcon, showSelect, set
                         <Button
                             variant="dark"
                             className="flex-grow-1 no-flex-basis d-flex flex-column align-items-center p-3"
-                            disabled
+                            onClick={() => switchShowFromCSVState(true)}
                         >
                             <FontAwesomeIcon icon={faFileCsv} className="text-2"/>
                             <span className="pt-2"><small>Archivo CSV</small></span>
@@ -48,7 +61,7 @@ const SelectImportModal = ({selectImportTitle, selectImportIcon, showSelect, set
                         <Button
                             variant="dark"
                             className="flex-grow-1 no-flex-basis d-flex flex-column align-items-center p-3"
-                            onClick={() => switchShowFromCSVState(true)}
+                            onClick={() => switchShowFromSetState(true)}
                         >
                             <FontAwesomeIcon icon={faList} className="text-2"/>
                             <span className="pt-2"><small>Set existente</small></span>
@@ -62,10 +75,10 @@ const SelectImportModal = ({selectImportTitle, selectImportIcon, showSelect, set
                 </Modal.Footer>
             </Modal>
             <ImportModal
-                show={(!showSelect && !showFromSet && showFromCSV)}
-                setShow={switchShowFromCSVState}
+                show={(!showSelect && showFromSet && !showFromCSV)}
+                setShow={switchShowFromSetState}
                 title={title}
-                icon={icon}
+                icon={faList}
                 confirmButton={title}
                 addItem={addItem}
                 sets={sets}
@@ -77,6 +90,13 @@ const SelectImportModal = ({selectImportTitle, selectImportIcon, showSelect, set
                 selectQuestions={selectQuestions}
                 importQuestion={importQuestion}
                 refreshItems={refreshItems}
+            />
+            <CSVImportModal 
+                show={(!showSelect && !showFromSet && showFromCSV)}
+                setShow={switchShowFromCSVState}
+                title={title}
+                icon={faFileCsv}
+                confirmButton={title}
             />
         </>
     );
