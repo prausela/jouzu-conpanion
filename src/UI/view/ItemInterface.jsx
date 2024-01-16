@@ -8,7 +8,7 @@ import AddButton from './AddButton';
 import LogInModal from './modals/LogInModal';
 import ImportButton from './ImportButton';
 
-const ItemInterface = ({items, title, addItem, editItem, deleteItem, refreshItems, showLogin, setShowLogin, logInAlert, setLogInAlert, authActionsPending, setAuthActionsPending, itemUrl, addQuestion, menuAlert, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions, importQuestion}) => {
+const ItemInterface = ({items, title, addItem, editItem, deleteItem, refreshItems, showLogin, setShowLogin, logInAlert, setLogInAlert, authActionsPending, setAuthActionsPending, itemUrl, addQuestion, menuAlert, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions, importQuestion, createQuestions}) => {
 
     const contextMenuRef            = useRef(null);
     const nonEditableItemRef        = useRef(null);
@@ -76,6 +76,7 @@ const ItemInterface = ({items, title, addItem, editItem, deleteItem, refreshItem
                         setId={setId}
                         selectQuestions={selectQuestions}
                         importQuestion={importQuestion}
+                        createQuestions={createQuestions}
                         refreshItems={refreshItems}
                     /> : ""
                 }

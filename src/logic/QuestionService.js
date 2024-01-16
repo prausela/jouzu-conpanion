@@ -13,6 +13,19 @@ const createQuestion = async (categoryId, setId, name, answers, correctAnswer) =
     return await QuestionDao.createQuestion(categoryId, setId, name, answers, correctAnswer);
 }
 
+const createQuestions = async (categoryId, setId, questions) => {
+    let resQuestions = [];
+    for(let i = 0; i < questions.length; i++){
+        const { name, answers, correctAnswer } = questions[i];
+        const result = await createQuestion(categoryId, setId, name, answers, correctAnswer);
+        resQuestions[i] = {
+            "idx" : i,
+            "state" : result.status == CREATED ? "success" : "failure"
+        }
+    }
+    return resQuestions;
+}
+
 const importQuestions = async (categoryId, setId, question2import) => {
     let answers = [];
     for(let i = 0; i < question2import.length; i++) {
@@ -46,5 +59,6 @@ export default {
     createQuestion,
     changeQuestion,
     removeQuestion,
-    importQuestions
+    importQuestions,
+    createQuestions
 }

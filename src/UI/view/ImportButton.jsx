@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ImportModal from './modals/ImportModal';
 import SelectImportModal from './modals/SelectImportModal';
 
-const ImportButton = ({title, addItem, className, variant, icon, refer, addQuestion, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions, importQuestion, refreshItems}) => {
+const ImportButton = ({title, addItem, className, variant, icon, refer, addQuestion, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions, importQuestion, refreshItems, createQuestions}) => {
     const [isShowingModal, setShowingModal] = useState(false);
 
     const showModal = () => setShowingModal(true);
@@ -45,6 +45,7 @@ const ImportButton = ({title, addItem, className, variant, icon, refer, addQuest
                     selectQuestions={selectQuestions}
                     importQuestion={importQuestion}
                     refreshItems={refreshItems}
+                    createQuestions={createQuestions}
                 />
                 
             }

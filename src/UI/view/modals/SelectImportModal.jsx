@@ -5,7 +5,7 @@ import { Button, Modal } from "react-bootstrap";
 import ImportModal from "./ImportModal";
 import CSVImportModal from "./CSVImportModal";
 
-const SelectImportModal = ({selectImportTitle, selectImportIcon, showSelect, setShowSelect, title, addItem, confirmButton, icon, show, setShow, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions, importQuestion, refreshItems}) => {
+const SelectImportModal = ({selectImportTitle, selectImportIcon, showSelect, setShowSelect, title, addItem, confirmButton, icon, show, setShow, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions, importQuestion, refreshItems, createQuestions}) => {
     const [showFromCSV, setShowFromCSV] = useState(false);
     const [showFromSet, setShowFromSet] = useState(false);
 
@@ -97,6 +97,10 @@ const SelectImportModal = ({selectImportTitle, selectImportIcon, showSelect, set
                 title={title}
                 icon={faFileCsv}
                 confirmButton={title}
+                createQuestions={createQuestions}
+                categoryId={categoryId}
+                setId={setId}
+                refreshItems={refreshItems}
             />
         </>
     );

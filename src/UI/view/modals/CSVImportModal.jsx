@@ -1,22 +1,26 @@
-import { faCheck, faCircleInfo, faHandPointer, faInfo, faPlus, faRightLeft, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faCircleInfo, faHandPointer, faInfo, faPlus, faRightLeft, faRightToBracket, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useCSVReader, formatFileSize } from "react-papaparse";
 import IconButton from "../IconButton";
 import QuestionInfoModal from "./QuestionInfoModal";
+import ImportingCSVModal from "./ImportingCSVModal";
 
-const CSVImportModal = ({show, setShow, icon, title, confirmButton}) => {
+const CSVImportModal = ({show, setShow, icon, title, confirmButton, createQuestions, categoryId, setId, refreshItems}) => {
     const [isHover, setIsHover] = useState(false);
     const [questions, setQuestions] = useState([]);
+    const [chosenQuestions, setChosenQuestions] = useState([]);
     const [chosenQuestionsIdxs, setChosenQuestionsIdxs] = useState([]);
     const [infoQuestion, setInfoQuestion] = useState(null);
     const [showInfo, setShowInfo] = useState(false);
+    const [showImportingModal, setShowImportingModal] = useState(false);
 
     const { CSVReader } = useCSVReader();
 
     const handleAccept = () => {
-        handleClose();
+        setChosenQuestions(questions.filter((q, idx) => chosenQuestionsIdxs.includes(idx)));
+        setShowImportingModal(true);
     }
 
     const handleClose = () => {
@@ -72,6 +76,13 @@ const CSVImportModal = ({show, setShow, icon, title, confirmButton}) => {
         setChosenQuestionsIdxs([]);
     }
 
+    const handleCloseImporting = (val) => {
+        setShowImportingModal(val);
+        if (!val) {
+            handleClose();
+        }
+    }
+
     return show ? (
             <>
                 <CSVReader
@@ -83,7 +94,7 @@ const CSVImportModal = ({show, setShow, icon, title, confirmButton}) => {
                         ProgressBar,
                         getRemoveFileProps,
                     }) => (
-                            <Modal show={(show && !showInfo)} onHide={handleClose} className="modal-content-center">
+                            <Modal show={(show && !showInfo && !showImportingModal)} onHide={handleClose} className="modal-content-center">
                                 <Modal.Header closeButton className="text-white bg-dark">
                                     <Modal.Title className="d-flex align-items-center"><FontAwesomeIcon icon={icon} className="text-2"/><span className="ps-2"><small>{title}</small></span></Modal.Title>
                                 </Modal.Header>
@@ -212,6 +223,17 @@ const CSVImportModal = ({show, setShow, icon, title, confirmButton}) => {
                     icon={faCircleInfo}
                     show={showInfo}
                     setShow={setShowInfo}
+                />
+                <ImportingCSVModal
+                    title="Importando"
+                    show={showImportingModal}
+                    selectedQuestions={chosenQuestions}
+                    setShow={handleCloseImporting}
+                    icon={faRightToBracket}
+                    categoryId={categoryId}
+                    setId={setId}
+                    createQuestions={createQuestions}
+                    refreshItems={refreshItems}
                 />
             </>
         ) : "";
