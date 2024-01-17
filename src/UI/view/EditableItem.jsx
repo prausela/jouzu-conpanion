@@ -74,7 +74,7 @@ const EditableItem = ({id, item, itemCount, className, editItem, deleteItem, ref
                             text={item.name}
                             visible={visible}
                             onClick={() => addQuestion ? {} : navigate(itemUrl(id))}
-                            isFolder={false}
+                            isFolder={item.type && item.type === "folder"}
                         />
                     </div>
                     <span className="ps-2"/>
