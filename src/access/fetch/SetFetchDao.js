@@ -3,8 +3,15 @@ import fetchConfig from "../../UI/config/fetchConfig";
 
 const getAllSets = async (categoryId) => {
     try {
+        let authToken = fetchConfig.getAuthorizationHeader();
+        if(!authToken) {
+            return { status: UNAUTHORIZED }
+        }
         const response = await fetch(BASE_URL + `/categories/${categoryId}/sets/get?sort=position`, {
-            method : "get"
+            method : "get",
+            headers : {
+                "Authorization" : authToken
+            }
         });
         if (response.status !== OK) {
             return { status: response.status };
@@ -22,8 +29,15 @@ const getAllSets = async (categoryId) => {
 
 const findSet = async (categoryId, id) => {
     try {
+        let authToken = fetchConfig.getAuthorizationHeader();
+        if(!authToken) {
+            return { status: UNAUTHORIZED }
+        }
         const response = await fetch(BASE_URL + `/categories/${categoryId}/sets/${id}/get`, {
-            method : "get"
+            method : "get",
+            headers : {
+                "Authorization" : authToken
+            }
         });
         if (response.status !== OK) {
             return { status: response.status };

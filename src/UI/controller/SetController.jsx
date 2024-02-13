@@ -15,14 +15,23 @@ const SetController = ({showLogin, setShowLogin, authActionsPending, setAuthActi
     const setUrl = (id) => `/levels/${categoryId}/sets/${id}`;
 
     useEffect(() => {
-        refreshItems();
-    }, []);
+        if (!showLogin)
+            refreshItems();
+    }, [showLogin]);
 
     const refreshItems = () => {
         setItems(null);
         setMenuAlert({variant: "primary", value:"Espere..."});
         CategoryService.findCategory(categoryId).then((response) => {
-            if (response.status !== OK) {
+            if (response.status === UNAUTHORIZED) {
+                const newAuthActionsPending = [...authActionsPending, () => refreshItems()];
+                setAuthActionsPending(newAuthActionsPending);
+                setLogInAlert("Necesitás ingresar nuevamente para visualizar el contenido");
+                setShowLogin(true);
+                setMenuAlert({});
+                return;
+            }
+            else if (response.status !== OK) {
                 setMenuAlert({variant: "danger", value:"Ocurrió un error. Refrezque la página"});
                 return;
             }
