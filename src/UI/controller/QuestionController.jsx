@@ -5,6 +5,7 @@ import SetService from "../../logic/SetService";
 import { CREATED, NO_CONTENT, OK, UNAUTHORIZED } from "../config/apiConstants";
 import ItemInterface from "../view/ItemInterface";
 import CategoryService from "../../logic/CategoryService";
+import { faGamepad } from "@fortawesome/free-solid-svg-icons";
 
 const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAuthActionsPending, logInAlert, setLogInAlert}) => {
     const [items, setItems] = useState(null);
@@ -222,6 +223,7 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
     return (
         <ItemInterface 
             items={items}
+            icon={faGamepad}
             title={questionSet.name ? questionSet.name : ""}
             addItem={addItem}
             editItem={editItem}

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import CategoryService from "../../logic/CategoryService";
 import { CREATED, NO_CONTENT, OK, UNAUTHORIZED } from "../config/apiConstants";
 import ItemInterface from "../view/ItemInterface";
+import { faHome } from "@fortawesome/free-solid-svg-icons";
 
 const CategoryController = ({showLogin, setShowLogin, authActionsPending, setAuthActionsPending, logInAlert, setLogInAlert}) => {
     const [items, setItems] = useState(null);
@@ -124,6 +125,7 @@ const CategoryController = ({showLogin, setShowLogin, authActionsPending, setAut
         <ItemInterface 
             items={items}
             title="Niveles"
+            icon={faHome}
             addItem={addItem}
             editItem={editItem}
             deleteItem={deleteItem}

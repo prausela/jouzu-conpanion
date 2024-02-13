@@ -4,6 +4,7 @@ import CategoryService from "../../logic/CategoryService";
 import SetService from "../../logic/SetService";
 import { CREATED, NO_CONTENT, OK, UNAUTHORIZED } from "../config/apiConstants";
 import ItemInterface from "../view/ItemInterface";
+import { faListUl } from "@fortawesome/free-solid-svg-icons";
 
 const SetController = ({showLogin, setShowLogin, authActionsPending, setAuthActionsPending, logInAlert, setLogInAlert}) => {
     const [items, setItems] = useState(null);
@@ -137,6 +138,7 @@ const SetController = ({showLogin, setShowLogin, authActionsPending, setAuthActi
         <ItemInterface 
             items={items}
             title={category.name ? category.name : ""}
+            icon={faListUl}
             addItem={addItem}
             editItem={editItem}
             deleteItem={deleteItem}

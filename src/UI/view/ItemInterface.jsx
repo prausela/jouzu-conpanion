@@ -8,7 +8,7 @@ import AddButton from './AddButton';
 import LogInModal from './modals/LogInModal';
 import ImportButton from './ImportButton';
 
-const ItemInterface = ({items, title, addItem, editItem, deleteItem, refreshItems, showLogin, setShowLogin, logInAlert, setLogInAlert, authActionsPending, setAuthActionsPending, itemUrl, addQuestion, menuAlert, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions, importQuestion, createQuestions}) => {
+const ItemInterface = ({items, title, icon, addItem, editItem, deleteItem, refreshItems, showLogin, setShowLogin, logInAlert, setLogInAlert, authActionsPending, setAuthActionsPending, itemUrl, addQuestion, menuAlert, categories, sets, setCategories, setSets, categoryId, setId, selectQuestions, importQuestion, createQuestions, userPage}) => {
 
     const contextMenuRef            = useRef(null);
     const nonEditableItemRef        = useRef(null);
@@ -21,8 +21,10 @@ const ItemInterface = ({items, title, addItem, editItem, deleteItem, refreshItem
             <ContextMenu 
                 className="fix-top w-100 interface absolute-center-x"
                 title={title}
+                icon={icon}
                 refer={contextMenuRef}
                 menuAlert={menuAlert}
+                userPage={userPage}
             />
             <main className="interface pb-2">
                 <Items 
