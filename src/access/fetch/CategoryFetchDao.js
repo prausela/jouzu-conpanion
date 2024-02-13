@@ -29,8 +29,15 @@ const getAllCategories = async () => {
 
 const findCategory = async (id) => {
     try {
+        let authToken = fetchConfig.getAuthorizationHeader();
+        if(!authToken) {
+            return { status: UNAUTHORIZED }
+        }
         const response = await fetch(BASE_URL + `/categories/${id}/get`, {
-            method : "get"
+            method : "get",
+            headers : {
+                "Authorization" : authToken
+            }
         });
         if (response.status !== OK) {
             return { status: response.status };
