@@ -16,14 +16,23 @@ const QuestionController = ({showLogin, setShowLogin, authActionsPending, setAut
     const setUrl = (id) => `/levels/${categoryId}/sets/${setId}/questions/${id}`;
 
     useEffect(() => {
-        refreshItems();
-    }, []);
+        if (!showLogin)
+            refreshItems();
+    }, [showLogin]);
 
     const refreshItems = () => {
         setItems(null);
         setMenuAlert({variant: "primary", value:"Espere..."});
         SetService.findSet(categoryId, setId).then((response) => {
-            if (response.status !== OK) {
+            if (response.status === UNAUTHORIZED) {
+                const newAuthActionsPending = [...authActionsPending, () => refreshItems()];
+                setAuthActionsPending(newAuthActionsPending);
+                setLogInAlert("Necesitás ingresar nuevamente para visualizar el contenido");
+                setShowLogin(true);
+                setMenuAlert({});
+                return;
+            }
+            else if (response.status !== OK) {
                 setMenuAlert({variant: "danger", value:"Ocurrió un error. Refrezque la página"});
                 return;
             }

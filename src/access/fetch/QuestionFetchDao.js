@@ -1,11 +1,17 @@
-import axiosConfig from "../../UI/config/axiosConfig";
 import { BASE_URL, CREATED, NO_CONTENT, OK, TIMEOUT, UNAUTHORIZED } from "../../UI/config/apiConstants";
 import fetchConfig from "../../UI/config/fetchConfig";
 
 const getAllQuestions = async (categoryId, setId) => {
     try {
+        let authToken = fetchConfig.getAuthorizationHeader();
+        if(!authToken) {
+            return { status: UNAUTHORIZED }
+        }
         const response = await fetch(BASE_URL + `/categories/${categoryId}/sets/${setId}/questions/get`, {
-            method : "get"
+            method : "get",
+            headers : {
+                "Authorization" : authToken
+            }
         });
         if (response.status !== OK) {
             return { status: response.status };
@@ -23,8 +29,15 @@ const getAllQuestions = async (categoryId, setId) => {
 
 const findQuestion = async (categoryId, setId, id) => {
     try {
+        let authToken = fetchConfig.getAuthorizationHeader();
+        if(!authToken) {
+            return { status: UNAUTHORIZED }
+        }
         const response = await fetch(BASE_URL + `/categories/${categoryId}/sets/${setId}/questions/${id}/get`, {
-            method : "get"
+            method : "get",
+            headers : {
+                "Authorization" : authToken
+            }
         });
         if (response.status !== OK) {
             return { status: response.status };
