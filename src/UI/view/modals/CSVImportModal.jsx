@@ -39,7 +39,7 @@ const CSVImportModal = ({show, setShow, icon, title, confirmButton, createQuesti
 
     const parseQuestionsInFile = (result) => {
         if (result && result.data) {
-            const newQuestions = result.data.filter(row => row.length > 3).map(row => ({
+            const newQuestions = result.data.filter(row => row.length >= 3).map(row => ({
                 name : row[0],
                 correct_answer : {name : row[1]},
                 answers : [
